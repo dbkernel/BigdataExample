@@ -5,7 +5,7 @@
 #源文件，自动找所有.c和.cpp文件，并将目标定义为同名.o文件
 SOURCE  := $(wildcard *.c) $(wildcard *.cpp)
 OBJS    := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
-TARGET  := tasks_test
+TARGET  := test
 
 #compile and lib parameter
 #编译参数

@@ -102,7 +102,7 @@ void task2(const Row *rows, int nrows)
 */
 void task3(Row *rows, int nrows)
 {
-    int len = 10;
+    int len = 100;
 
     for (int i = 1; i < len; i++)
     {
@@ -128,10 +128,10 @@ void task3(Row *rows, int nrows)
 // 跳表
 void task4(Row *rows, int nrows)
 {
-    int len = 10;
+    int len = 100;
     int minIndexs[len], maxIndexs[len];
 
-    skiplist *list = skiplistCreate(compareB2);
+    skiplist *list = skiplistCreate(compareBForRowNode);
 
     for (int i = 1; i < len; i++)
     {
@@ -144,7 +144,7 @@ void task4(Row *rows, int nrows)
         if (minIndex < maxIndex)
         {
             RowNode node = {i, rows + minIndex};
-            skiplistInsert(list, &node);
+            skiplistInsert(list, &node); // 插入后按照 B 列升序构建跳表
         }
     }
 
@@ -157,7 +157,7 @@ void task4(Row *rows, int nrows)
         if (minIndex < maxIndex)
         {
             RowNode node = {head->index, rows + minIndex};
-            skiplistInsert(list, &node);
+            skiplistInsert(list, &node); // 插入后按照 B 列升序构建跳表
         }
     }
 

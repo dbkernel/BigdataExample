@@ -13,6 +13,14 @@ typedef struct RowNode
     const Row *row;
 } RowNode;
 
+enum TaskNum
+{
+    TASK1 = 1,
+    TASK2,
+    TASK3,
+    TASK4
+};
+
 // 升序：如果 left < right，返回 true
 inline bool compare(Row left, Row right)
 {
@@ -29,9 +37,9 @@ inline bool compareB(Row left, Row right)
 }
 
 // 升序
-inline int compareB2(const void *left, const void *right)
+inline int compareBForRowNode(const void *left, const void *right)
 {
-    return ((Row *)left)->b - ((Row *)right)->b;
+    return ((RowNode *)left)->row->b - ((RowNode *)right)->row->b;
 }
 
 void task1(const Row *rows, int nrows);
