@@ -143,8 +143,8 @@ void task4(Row *rows, int nrows)
         maxIndexs[i] = maxIndex;
         if (minIndex < maxIndex)
         {
-            RowNode node = {i, rows + minIndex};
-            skiplistInsert(list, &node); // 插入后按照 B 列升序构建跳表
+            RowNode *node = new RowNode(i, rows + minIndex);
+            skiplistInsert(list, node); // 插入后按照 B 列升序构建跳表
         }
     }
 
@@ -156,9 +156,10 @@ void task4(Row *rows, int nrows)
         int maxIndex = maxIndexs[head->index];
         if (minIndex < maxIndex)
         {
-            RowNode node = {head->index, rows + minIndex};
-            skiplistInsert(list, &node); // 插入后按照 B 列升序构建跳表
+            RowNode *node = new RowNode(head->index, rows + minIndex);
+            skiplistInsert(list, node); // 插入后按照 B 列升序构建跳表
         }
+        free(head);
     }
 
     skiplistFree(list);

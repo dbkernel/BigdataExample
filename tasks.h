@@ -9,6 +9,8 @@ typedef struct Row
 
 typedef struct RowNode
 {
+    RowNode() {}
+    RowNode(int index, const Row *row) : index(index), row(row) {}
     int index;
     const Row *row;
 } RowNode;
