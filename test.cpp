@@ -1,3 +1,10 @@
+// Copyright (c) 2021-present, DBKernel (Wenshuang Lu). All rights reserved.
+// This source code is licensed under the Apache 2.0 License
+// (found in the LICENSE file in the root directory).
+// you may not use this file except in compliance with the License.
+//
+// Maintainer: Wenshuang Lu (wenshuang_lu@163.com)
+
 #include "tasks.h"
 
 #include <cstdlib>
@@ -50,7 +57,12 @@ void runTask(enum TaskNum num, Row *rows, int row_nums)
     }
     printf("task%d takes %ld nano-seconds\n", num, getTimeNs() - start);
 }
-
+/*
+task1 takes 27256931 nano-seconds
+task2 takes 163552 nano-seconds
+task3 takes 5082328 nano-seconds
+task4 takes 5898344 nano-seconds
+*/
 int main(int argc, char **argv)
 {
     int row_nums = 1000 * 10000; // 1千万行

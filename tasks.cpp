@@ -1,3 +1,10 @@
+// Copyright (c) 2021-present, DBKernel (Wenshuang Lu). All rights reserved.
+// This source code is licensed under the Apache 2.0 License
+// (found in the LICENSE file in the root directory).
+// you may not use this file except in compliance with the License.
+//
+// Maintainer: Wenshuang Lu (wenshuang_lu@163.com)
+
 #include "tasks.h"
 #include "skiplist.h"
 
