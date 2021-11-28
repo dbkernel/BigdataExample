@@ -24,7 +24,7 @@ enum TaskNum
 };
 
 // 升序：如果 left < right，返回 true
-inline bool compare(Row left, Row right)
+inline bool compareAB(Row left, Row right)
 {
     if (left.a < right.a || (left.a == right.a && left.b < right.b))
         return true;
@@ -39,9 +39,22 @@ inline bool compareB(Row left, Row right)
 }
 
 // 升序
-inline int compareBForRowNode(const void *left, const void *right)
+inline bool compareBA(Row left, Row right)
 {
-    return ((RowNode *)left)->row->b - ((RowNode *)right)->row->b;
+    if (left.b < right.b || (left.b == right.b && left.a < right.a))
+        return true;
+    else
+        return false;
+}
+
+// 升序
+inline int compareBAForRowNode(const void *left, const void *right)
+{
+    int res = ((RowNode *)left)->row->b - ((RowNode *)right)->row->b;
+    if (res != 0)
+        return res;
+    else
+        return ((RowNode *)left)->row->a - ((RowNode *)right)->row->a;
 }
 
 void task1(const Row *rows, int nrows);

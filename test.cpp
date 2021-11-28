@@ -53,32 +53,29 @@ void runTask(enum TaskNum num, Row *rows, int row_nums)
 
 int main(int argc, char **argv)
 {
-    int row_nums = 10000;
+    int row_nums = 1000 * 10000; // 1千万行
 
+    // task1 & task2
     {
         Row *rows = generateRows(row_nums);
         runTask(TASK1, rows, row_nums);
-        free(rows);
-    }
-
-    row_nums = 1 * 10000 * 10000; // 1亿行
-    {
-        Row *rows = generateRows(row_nums);
-        sort(rows, rows + row_nums, compare);
+        sort(rows, rows + row_nums, compareAB);
         runTask(TASK2, rows, row_nums);
         free(rows);
     }
 
+    // task3
     {
         Row *rows = generateRows(row_nums);
-        sort(rows, rows + row_nums, compare);
+        sort(rows, rows + row_nums, compareAB);
         runTask(TASK3, rows, row_nums);
         free(rows);
     }
 
+    // task4
     {
         Row *rows = generateRows(row_nums);
-        sort(rows, rows + row_nums, compare);
+        sort(rows, rows + row_nums, compareAB);
         runTask(TASK4, rows, row_nums);
         free(rows);
     }

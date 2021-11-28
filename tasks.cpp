@@ -48,7 +48,7 @@ int binarySearch(const Row *rows, int nrows, const Row target)
     while (left < right)
     {
         mid = (left + right) / 2;
-        int res = compare(rows[mid], target);
+        int res = compareAB(rows[mid], target);
         if (res)
             left = mid + 1;
         else
@@ -100,6 +100,7 @@ void task2(const Row *rows, int nrows)
 * 1000,31
 * 2000,33
 */
+// 快速排序
 void task3(Row *rows, int nrows)
 {
     int len = 100;
@@ -113,6 +114,7 @@ void task3(Row *rows, int nrows)
 
         // 由于内存可以放下，按快速排序方式对 b 列排序后输出结果集
         sort(rows + minIndex, rows + maxIndex, compareB);
+        // sort(rows + minIndex, rows + maxIndex, compareBA);
         while (minIndex < maxIndex)
         {
             cout << rows[minIndex].a << ", " << rows[minIndex].b << endl;
@@ -126,12 +128,15 @@ void task3(Row *rows, int nrows)
 * but expanded to 1000,2000,3000... , 98000, 99000.
 */
 // 跳表
+// 实测在1亿行数据以下，效率并没有 task3 的快速排序高，我分析有两方面原因：
+// 1. task3 仅需比较B列，而 task4 中所有跳表结构不允许重复元素，因此按（B，A）列排序，排序代价更高；
+// 2. 跳表、红黑树、B+ 树的优势在于查找速度会很快，但是构建、维护这些结构是有一些代价的。
 void task4(Row *rows, int nrows)
 {
     int len = 100;
     int minIndexs[len], maxIndexs[len];
 
-    skiplist *list = skiplistCreate(compareBForRowNode);
+    skiplist *list = skiplistCreate(compareBAForRowNode);
 
     for (int i = 1; i < len; i++)
     {
@@ -141,19 +146,24 @@ void task4(Row *rows, int nrows)
         int maxIndex = binarySearch(rows, nrows, max);
         minIndexs[i] = minIndex;
         maxIndexs[i] = maxIndex;
+        // printf("minIndexs[%d]=%d, maxIndexs[%d]=%d\n", i, minIndexs[i], i, maxIndexs[i]);
         if (minIndex < maxIndex)
         {
             RowNode *node = new RowNode(i, rows + minIndex);
-            skiplistInsert(list, node); // 插入后按照 B 列升序构建跳表
+            skiplistInsert(list, node); // 插入后按照 B 列升序构建跳表，如果元素已存在，则不再插入，因此，适合结果集唯一或需要去重的情况
         }
     }
 
-    while (skiplistLength(list) != 0)
+    while (1)
     {
         RowNode *head = (RowNode *)skiplistPopHead(list);
+        if (head == nullptr)
+            break;
         cout << head->row->a << ", " << head->row->b << endl;
         int minIndex = ++minIndexs[head->index]; // 最小边界后移
         int maxIndex = maxIndexs[head->index];
+        // printf("skiplistLength=%ld, minIndexs[%d]=%d, maxIndexs[%d]=%d\n",
+        //        skiplistLength(list), head->index, minIndexs[head->index], head->index, maxIndexs[head->index]);
         if (minIndex < maxIndex)
         {
             RowNode *node = new RowNode(head->index, rows + minIndex);
